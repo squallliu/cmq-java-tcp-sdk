@@ -1,12 +1,13 @@
 package com.qcloud.cmq.client.netty;
 
-import com.qcloud.cmq.client.protocol.Cmq;
-
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.qcloud.cmq.client.protocol.Cmq;
+
 public class ResponseFuture {
+    private final String address;
     private final long timeoutMillis;
     private final InvokeCallback invokeCallback;
     private final long beginTimestamp = System.currentTimeMillis();
@@ -19,7 +20,8 @@ public class ResponseFuture {
     private volatile boolean sendRequestOK = true;
     private volatile Throwable cause;
 
-    public ResponseFuture(long timeoutMillis, InvokeCallback invokeCallback, SemaphoreReleaseOnlyOnce once) {
+    public ResponseFuture(String address, long timeoutMillis, InvokeCallback invokeCallback, SemaphoreReleaseOnlyOnce once) {
+        this.address = address;
         this.timeoutMillis = timeoutMillis;
         this.invokeCallback = invokeCallback;
         this.once = once;
@@ -105,5 +107,9 @@ public class ResponseFuture {
         return "ResponseFuture [responseCommand=" + responseCommand + ", sendRequestOK=" + sendRequestOK
                 + ", cause=" + cause  + ", timeoutMillis=" + timeoutMillis + ", invokeCallback=" + invokeCallback
                 + ", beginTimestamp=" + beginTimestamp + ", countDownLatch=" + countDownLatch + "]";
+    }
+
+    public String getAddress() {
+        return address;
     }
 }
