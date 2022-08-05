@@ -644,14 +644,6 @@ public class NettyClient {
         if (cw != null && cw.isOK()) {
             return cw;
         }
-        return this.createChannel(address);
-    }
-
-    private ChannelWrapper createChannel(final String address) throws InterruptedException {
-        ChannelWrapper cw = this.channelTables.get(address);
-        if (cw != null && cw.isOK()) {
-            return cw;
-        }
 
         if (this.lockChannelTables.tryLock(LOCK_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)) {
             try {
