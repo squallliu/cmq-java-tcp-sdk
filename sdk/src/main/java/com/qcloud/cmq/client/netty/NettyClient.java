@@ -212,8 +212,6 @@ public class NettyClient {
                 }
             } catch (Throwable e) {
                 logger.warn("scanResponseTable, operationComplete Exception", e);
-            } finally {
-                rf.release();
             }
         }
     }
