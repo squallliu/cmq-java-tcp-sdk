@@ -11,7 +11,6 @@ import com.qcloud.cmq.client.netty.RemoteException;
 import com.qcloud.cmq.client.protocol.Cmq;
 import org.slf4j.Logger;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
@@ -62,7 +61,7 @@ public class SubscribeService {
             flightPullRequest.incrementAndGet();
             try {
                 SubscribeService.this.pullImmediately();
-            }catch (RemoteException | InterruptedException | MQClientException e) {
+            }catch (Throwable e) {
                 logger.error("pull message error", e);
                 SubscribeService.this.consumer.setNeedUpdateRoute();
             } finally {
